@@ -1,0 +1,44 @@
+import 'dart:ui';
+
+import 'constants.dart';
+import 'logger.dart';
+import 'profiling.dart';
+import 'renderer.dart';
+import 'themes/theme.dart';
+import 'tile_source.dart';
+
+class ImageRenderer {
+  final Logger logger;
+  final Theme theme;
+  final double scale;
+
+  ImageRenderer({required this.theme, required this.scale, Logger? logger})
+      : logger = logger ?? const Logger.noop() {
+    assert(scale >= 1 && scale <= 4);
+  }
+
+  /// renders the given tile to an image
+  ///
+  ///
+  /// [zoomScaleFactor] the 1-dimensional scale at which the tile is being
+  ///        rendered. If the tile is being rendered at twice it's normal size
+  ///        along the x-axis, the zoomScaleFactor would be 2. 1.0 indicates that
+  ///        no scaling is being applied.
+  /// [zoom] the current zoom level, which is used to filter theme layers
+  ///        via `minzoom` and `maxzoom`. Value if provided must be >= 0 and <= 24
+  /// [tile] the tile to render
+  Future<Image> render(TileSource tile,
+      {double zoomScaleFactor = 1.0, required double zoom}) {
+    return profileAsync('RenderImage', () {
+      final recorder = PictureRecorder();
+      double size = scale * tileSize;
+      final rect = Rect.fromLTRB(0, 0, size, size);
+      final canvas = Canvas(recorder, rect);
+      canvas.clipRect(rect);
+      canvas.scale(scale.toDouble(), scale.toDouble());
+      Renderer(theme: theme, logger: logger).render(canvas, tile,
+          zoomScaleFactor: zoomScaleFactor, zoom: zoom, rotation: 0.0);
+      return recorder.endRecording().toImage(size.floor(), size.floor());
+    });
+  }
+}

@@ -1,0 +1,117 @@
+name: shu_campus_map
+description: "上海大学通信与信息学院数据结构课程项目 - 校园地图导航系统"
+publish_to: 'none'
+
+# 版本号格式: 主版本.次版本.修订号+构建号
+# 例如: 1.2.43+1
+#
+# Android: 
+# - build-name 对应 versionName
+# - build-number 对应 versionCode
+#
+# iOS:
+# - build-name 对应 CFBundleShortVersionString 
+# - build-number 对应 CFBundleVersion
+#
+# Windows:
+# - build-name 用作产品和文件版本的主、次、修订号
+# - build-number 用作构建后缀
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+# 依赖项指定了项目运行所需的其他包
+# 可以通过运行 `flutter pub upgrade --major-versions` 自动升级到最新版本
+# 也可以手动修改下面的版本号来更新依赖
+# 运行 `flutter pub outdated` 可以查看哪些依赖有新版本
+dependencies:
+  flutter:
+    sdk: flutter
+  # 地图相关依赖 - 本地修改的插件
+  flutter_map:
+    path: local_packages/flutter_map
+  vector_map_tiles_mbtiles:
+    path: local_packages/flutter_map_plugins/vector_map_tiles_mbtiles
+  mbtiles:
+    path: local_packages/dart_mbtiles
+  vector_map_tiles:
+    path: local_packages/flutter-vector-map-tiles
+  vector_tile_renderer:
+    path: local_packages/dart-vector-tile-renderer
+  flutter_map_mbtiles:
+    path: local_packages/flutter_map_plugins/flutter_map_mbtiles
+  line_animator:
+    path: local_packages/line_animator
+  kdtree:
+    path: local_packages/kd-tree
+
+  # 第三方依赖包
+  cupertino_icons: ^1.0.8
+  path_provider: ^2.1.4
+  latlong2: ^0.9.1
+  http: ^1.2.2
+  url_strategy: ^0.3.0
+  logging: ^1.2.0
+  crypto: ^3.0.5
+  sqlite3_flutter_libs: ^0.5.24
+  package_info_plus: ^8.0.2
+  shared_preferences: ^2.3.2
+  shared_preferences_linux: ^2.3.2
+  shared_preferences_windows: ^2.3.2
+  flutter_riverpod: ^2.5.1
+  flutter_polyline_points: ^2.1.0
+  sqflite: any
+  sqflite_common_ffi: any
+  collection: ^1.19.0
+  r_tree: any
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # 推荐的 lint 规则集,用于鼓励良好的编码实践
+  # 在根目录的 analysis_options.yaml 文件中配置具体规则
+  flutter_lints: ^4.0.0
+
+# 关于 Dart 相关配置的更多信息,请参考:
+# https://dart.dev/tools/pub/pubspec
+
+# Flutter 特有配置
+flutter:
+
+  # 确保 Material Icons 字体包含在应用中
+  # 这样才能使用 material Icons 类中的图标
+  uses-material-design: true
+
+  assets:
+    - assets/map_style.json
+    - assets/shu_map.mbtiles
+    - assets/shu_map.osm.pbf
+    - assets/windows/sqlite3.dll
+    - assets/shu.geojson
+
+  # 图片资源可以包含多个不同分辨率的变体
+  # https://flutter.dev/to/resolution-aware-images
+
+  # 关于如何从依赖包中添加资源的详细信息
+  # https://flutter.dev/to/asset-from-package
+
+  # 要为应用添加自定义字体,在这里添加 fonts 配置
+  # 每个配置项需要包含字体系列名称(family)和字体文件列表(fonts)
+  # 例如:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # 关于如何使用依赖包中的字体的详细信息
+  # https://flutter.dev/to/font-from-package
